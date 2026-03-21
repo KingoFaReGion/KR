@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gia Đình Nhìu Chiện PUBG</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="team-header">
+        <div class="header-bg">
+            </div>
+        <div class="header-content">
+            <h1>Gia Đình Nhìu Chiện PUBG</h1>
+            <h2>Welcome to KingoFaReGion</h2>
+            <div class="header-buttons">
+                <a href="https://zalo.me/g/eipdae678" target="_blank" class="btn">Gia nhập gia đình</a>
+                <a href="https://photos.app.goo.gl/xz763ZtwfMHn6JGt7" target="_blank" class="btn">Xem Kỉ Niệm Team</a>
+            </div>
+        </div>
+    </header>
+
+
+    <main>
+        <div id="members-container" class="members-grid">
+            </div>
+    </main>
+
+
+    <div id="culture-popup" class="modal hidden">
+        <div class="modal-content culture-content">
+            <span class="close-btn" id="close-culture">&times;</span>
+            <p>Nhóm thoải mái không ràng buộc, có thể nói chuyện hơi bậy, chửi cho đã cái mõm nhưng bít điểm để chửi không phải lôi za phả 18 đời cụ kị ra chửi, mọi hành zi quá khích sẽ bị go out. ĐẶC BIỆT không chứa thể loại 3 we</p>
+        </div>
+    </div>
+
+
+    <div id="profile-popup" class="modal hidden">
+        <div class="modal-content profile-content">
+            <span class="close-btn" id="close-profile">&times;</span>
+            <div id="profile-details"></div>
+        </div>
+    </div>
+
+
+    <footer>
+        <button id="btn-culture" class="btn-culture">Văn hoá nhóm</button>
+        <div class="footer-bottom">
+            <p>3/2026 Gia Đình Nhiều Chiện PUBG - KingoFaReGion</p>
+        </div>
+    </footer>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
