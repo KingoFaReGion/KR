@@ -1,0 +1,18 @@
+﻿<div class="member-card" 
+    data-name="『KR・xBáo』" 
+    data-id="51765023672" 
+    data-zalo="https://zaloapp.com/qr/p/xzkrobe1cdfg?src=qr" 
+    data-pfimg="pftv1.png" 
+    data-desc="Gánh lặng gia đình - Người không có tiếng lói trong gia đình. Hiền như bụi nhưng bụi nào thì..." 
+    data-slogan="gánh team (hoặc gánh tạ or gánh nặng)!, mưu hèn kế mất zạy, ae toy là chính gọi là có mặt, cái nào ra cái nào, chuyện gì ra chuyện gì đâu ra đâu" 
+    data-guns="M16A4, AKM, AUG, MG3, FAMAS, GROZA" 
+    data-storage="https://drive.google.com/drive/folders/10t7w6ygyRW4UtkkaUuM53Z6vQC319q4X">
+    
+    <div class="avatar-container">
+        <img src="avatv1.png" alt="Avatar của 『KR・xBáo』">
+    </div>
+    <div class="info-container">
+        <h3>『KR・xBáo』</h3>
+        <p>ID: 51765023672</p>
+    </div>
+</div>
