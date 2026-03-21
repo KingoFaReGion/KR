@@ -1,0 +1,557 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GDNC PUBG • Mùa Hè 2026</title> 
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- SUMMER RAIN THEME SETTINGS --- */
+        :root {
+            --neon-blue: #00BFFF;
+            --neon-pink: #00FFFF;
+            --neon-yellow: #FFD700;
+            --bg-dark: #000c14;
+            --tet-red: #001f3f;
+            --tet-gold: #00FFFF;
+        }
+
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-dark);
+            background: linear-gradient(to bottom, #00111a, #000000);
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+
+        /* --- PARTICLE CANVAS (MƯA RƠI) --- */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; 
+            pointer-events: none;
+        }
+
+
+        .font-gaming {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+        }
+
+
+        /* --- GLITCH EFFECT --- */
+        .glitch-wrapper { position: relative; display: inline-block; }
+        .glitch { position: relative; color: #FFD700; z-index: 10; }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent;
+        }
+        .glitch::before {
+            left: 2px; text-shadow: -1px 0 #00ffff; clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        .glitch::after {
+            left: -2px; text-shadow: -1px 0 #00bfff; clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim { 0% { clip: rect(32px, 9999px, 18px, 0); } 100% { clip: rect(42px, 9999px, 22px, 0); } }
+        @keyframes glitch-anim2 { 0% { clip: rect(65px, 9999px, 100px, 0); } 100% { clip: rect(10px, 9999px, 80px, 0); } }
+
+
+        /* --- SCROLL ANIMATION --- */
+        .reveal-on-scroll { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal-on-scroll.active { opacity: 1; transform: translateY(0); }
+
+
+        /* --- TECH BORDER --- */
+        .tech-border-frame {
+            position: relative; aspect-ratio: 9/16; overflow: hidden;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            border: none; background: #001f3f;
+        }
+        .tech-border-wrapper { filter: drop-shadow(0 0 5px var(--shadow-color)); transition: transform 0.4s ease; }
+        .tech-border-wrapper:hover { transform: scale(1.03); filter: drop-shadow(0 0 15px #00FFFF); }
+        .tech-border-inner {
+            position: absolute; inset: 2px; background: #000; z-index: 10;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+        }
+
+
+        /* --- GLASSMORPHISM UI --- */
+        .glass-panel { background: rgba(0, 20, 30, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(0, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); }
+
+
+        /* --- MODAL --- */
+        .modal { opacity: 0; visibility: hidden; transition: all 0.4s ease; backdrop-filter: blur(12px); }
+        .modal.active { opacity: 1; visibility: visible; }
+        .modal-content { transform: scale(0.8) translateY(50px); transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .modal.active .modal-content { transform: scale(1) translateY(0); }
+
+
+        #lightbox-modal.active { display: flex !important; }
+        #lightbox-modal img { box-shadow: 0 0 50px rgba(0, 255, 255, 0.3); border: 2px solid rgba(0, 255, 255, 0.4); }
+
+
+        /* Animations */
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-marquee-slow { animation: marquee 35s linear infinite; }
+        .animate-marquee-normal { animation: marquee 15s linear infinite; }
+
+
+        /* --- LOADING SCREEN STYLES --- */
+        .loading-screen { position: fixed; inset: 0; z-index: 9999; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease, visibility 0.5s ease; }
+        .loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-bar-container { width: 300px; height: 4px; background: #111; margin-top: 20px; position: relative; overflow: hidden; border-radius: 2px; }
+        .loader-bar { height: 100%; width: 0%; transition-timing-function: linear; }
+        .loader-bar.global { background: #FFD700; box-shadow: 0 0 10px #FFD700; }
+        .loader-bar.member { background: #00FFFF; box-shadow: 0 0 10px #00FFFF; }
+        .loader-text { font-family: 'Orbitron', sans-serif; letter-spacing: 4px; font-size: 1.2rem; animation: pulse-text 1.5s infinite; }
+        @keyframes pulse-text { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        
+        .close-loader-btn {
+            position: absolute; top: 20px; right: 20px; background: transparent; border: 1px solid #333; color: #333;
+            width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; font-family: 'Orbitron', sans-serif;
+        }
+        .close-loader-btn:hover { border-color: #00ffff; color: #00ffff; transform: scale(1.1); }
+        /* Đã fix lỗi dư ngoặc nhọn ở đây */
+    </style>
+</head>
+<body class="min-h-screen selection:bg-blue-500 selection:text-white">
+
+
+    <div id="global-loader" class="loading-screen">
+        <button onclick="skipGlobalLoad()" class="close-loader-btn text-xl"><i class="fa-solid fa-xmark"></i></button>
+        <div class="mb-6 animate-pulse text-blue-400 text-6xl"><i class="fa-solid fa-cloud-showers-heavy"></i></div>
+        <div class="loader-text text-blue-400 mb-2">LOADING CLAN DATA...</div>
+        <div class="loader-bar-container border border-blue-900">
+            <div id="global-bar" class="loader-bar global"></div>
+        </div>
+    </div>
+
+
+    <div id="member-loader" class="loading-screen hidden bg-black/95 backdrop-blur-md">
+        <button onclick="cancelMemberLoad()" class="close-loader-btn text-xl"><i class="fa-solid fa-xmark"></i></button>
+        <div class="mb-6 animate-bounce text-cyan-400 text-6xl"><i class="fa-solid fa-faucet-drip"></i></div>
+        <div id="member-loading-text" class="loader-text text-cyan-400 mb-2">CONNECTING...</div>
+        <div class="loader-bar-container border border-cyan-900">
+            <div id="member-bar" class="loader-bar member"></div>
+        </div>
+        <div class="mt-4 text-gray-400 text-sm font-mono animate-pulse">Đang tải hồ sơ từ máy chủ...</div>
+    </div>
+
+
+    <canvas id="particle-canvas"></canvas>
+
+
+    <header class="relative w-full mb-12">
+        <div class="w-full h-[60vh] md:h-[80vh] relative overflow-hidden group">
+            <div class="absolute inset-0 bg-gradient-to-b from-blue-900/40 via-transparent to-black/90 z-10"></div>
+            <img src="team.png" class="w-full h-full object-cover object-top transition-transform duration-[3s] group-hover:scale-105 filter group-hover:blur-[2px] transition-all" alt="Clan Banner">
+            
+            <div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
+                <div class="animate-float">
+                    <p class="font-gaming text-4xl md:text-5xl text-blue-100 mb-2 drop-shadow-lg">Welcome to KingoFaReGion</p>
+                    <div class="glitch-wrapper mb-2">
+                        <h1 class="glitch font-gaming text-4xl md:text-7xl font-black uppercase tracking-wider" data-text="Gia Đình Nhìu Chiện">
+                            Gia Đình Nhìu Chiện
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute bottom-0 w-full h-32 bg-gradient-to-t from-[var(--bg-dark)] to-transparent z-20"></div>
+        </div>
+    </header>
+
+
+    <main class="container mx-auto px-4 pb-20 max-w-6xl relative z-10">
+        <div class="text-center mb-16 relative">
+            <h2 class="text-4xl md:text-5xl font-gaming font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 inline-block relative z-10 drop-shadow-sm">
+                THÀNH VIÊN NỔI BẬT
+            </h2>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full md:w-1/2 h-16 bg-blue-600/30 blur-2xl rounded-full -z-0"></div>
+        </div>
+        <div id="members-container" class="space-y-24"></div>
+    </main>
+
+
+    <div class="text-center pb-12 flex flex-col items-center gap-8 relative z-10">
+        <div class="flex flex-wrap gap-4 justify-center px-4 w-full">
+            <a href="https://zalo.me/g/eipdae678" target="_blank" class="relative px-8 py-3 bg-blue-700 overflow-hidden rounded-md group hover:bg-blue-800 transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] border border-cyan-500/50">
+                <span class="absolute w-0 h-full bg-cyan-400/20 left-0 top-0 transition-all duration-300 group-hover:w-full"></span>
+                <span class="relative font-bold text-lg text-white"><i class="fa-solid fa-comments mr-2"></i>GIA NHẬP ĐỘI</span>
+            </a>
+            <a href="https://photos.app.goo.gl/xz763ZtwfMHn6JGt7" target="_blank" class="relative px-8 py-3 bg-teal-700 overflow-hidden rounded-md group hover:bg-teal-800 transition-all shadow-[0_0_20px_rgba(20,184,166,0.4)] border border-teal-400/50">
+                 <span class="absolute w-0 h-full bg-white/20 left-0 top-0 transition-all duration-300 group-hover:w-full"></span>
+                 <span class="relative font-bold text-lg text-white"><i class="fa-solid fa-camera-retro mr-2"></i>KỶ NIỆM CLAN</span>
+             </a>
+        </div>
+        <button onclick="toggleCultureModal()" class="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-cyan-400 transition-all duration-200 bg-transparent border-2 border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black hover:shadow-[0_0_30px_rgba(34,211,238,0.6)]">
+            <span class="relative text-xl uppercase tracking-widest"><i class="fa-solid fa-scroll mr-2"></i> Văn Hoá Nhóm</span>
+        </button>
+    </div>
+
+
+    <footer class="py-8 bg-black/80 text-center border-t border-blue-900/50 relative z-10">
+        <p class="text-gray-400 font-mono">3/2026 Gia Đình Nhiều Chiện PUBG - KingoFaReGion</p>
+        <p class="text-blue-500 text-sm mt-2 font-tet">SUMMER EDITION Design by <span class="text-cyan-500 font-bold">THE BÁO</span></p>
+    </footer>
+
+
+    <div id="profile-modal" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90">
+        <div class="modal-content relative w-full max-w-5xl bg-[#00111a] rounded-xl overflow-hidden shadow-[0_0_50px_rgba(0,191,255,0.2)] flex flex-col md:flex-row border border-cyan-900 max-h-[90vh] h-auto">
+            <button onclick="closeProfile()" class="absolute top-4 right-4 z-50 text-gray-400 hover:text-cyan-500 transition text-2xl bg-black/50 w-10 h-10 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <div class="w-full md:w-5/12 bg-black/60 p-4 flex items-center justify-center relative shrink-0">
+                <div class="relative w-full md:w-auto h-auto aspect-[9/16] shadow-[0_0_20px_rgba(0,191,255,0.2)] rounded-lg overflow-hidden border border-cyan-700 bg-black max-h-[50vh] md:max-h-[80vh] group">
+                    <img id="modal-img" src="" class="w-full h-full object-contain cursor-zoom-in transition-transform duration-300 group-hover:blur-[2px]" alt="Profile" onclick="openLightbox(this.src)">
+                    <div class="absolute bottom-2 left-0 w-full text-center text-xs text-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                        <i class="fa-solid fa-expand"></i> Chạm để xem full
+                    </div>
+                </div>
+            </div>
+            <div class="w-full md:w-7/12 p-6 md:p-8 flex flex-col overflow-y-auto bg-[url('https://www.transparenttextures.com/patterns/black-scales.png')]">
+                <div class="min-h-min pb-10">
+                    <h2 id="modal-name" class="text-4xl md:text-5xl font-gaming font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-500 mb-2 mt-4 md:mt-0">NAME</h2>
+                    <div id="modal-role-badge" class="mb-6"></div>
+                    <div class="space-y-8">
+                        <div class="bg-blue-950/40 border-l-4 border-cyan-500 pt-7 pb-3 px-4 rounded-r relative group mt-2">
+                            <span class="text-xs text-cyan-500 uppercase font-bold tracking-widest absolute -top-3 left-0 bg-blue-950 px-2 py-1 border border-cyan-500/30 rounded shadow-md z-10"><i class="fa-solid fa-quote-left mr-1"></i> Slogan</span>
+                            <div class="marquee-container overflow-hidden whitespace-nowrap w-full">
+                                <div id="modal-slogan" class="inline-block animate-marquee-slow font-gaming text-xl text-cyan-100 py-1"></div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-950/40 border-l-4 border-teal-500 pt-7 pb-3 px-4 rounded-r relative group">
+                            <span class="text-xs text-teal-500 uppercase font-bold tracking-widest absolute -top-3 left-0 bg-blue-950 px-2 py-1 border border-teal-500/30 rounded shadow-md z-10"><i class="fa-solid fa-crosshairs mr-1"></i> Sở trường</span>
+                            <div class="marquee-container overflow-hidden whitespace-nowrap w-full">
+                                <div id="modal-guns" class="inline-block animate-marquee-normal font-bold text-lg text-white py-1"></div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-950/40 border-l-4 border-blue-500 pt-8 pb-4 px-5 rounded-r relative">
+                            <span class="text-xs text-blue-500 uppercase font-bold tracking-widest absolute -top-3 left-0 bg-blue-950 px-2 py-1 border border-blue-500/30 rounded shadow-md z-10"><i class="fa-solid fa-id-card mr-1"></i> Tiểu sử</span>
+                            <p id="modal-desc" class="text-gray-300 italic leading-relaxed text-base"></p>
+                        </div>
+                        <div class="flex flex-col gap-3 mt-4">
+                            <a id="modal-drive" href="#" target="_blank" class="block w-full py-4 text-center border border-green-600 text-green-400 hover:bg-green-700 hover:text-white font-gaming font-bold rounded uppercase transition-all tracking-wider"><i class="fa-brands fa-google-drive mr-2"></i> Truy cập Kho Lưu Trữ</a>
+                            <a id="modal-img-link" href="#" target="_blank" class="block w-full py-4 text-center border border-cyan-600 text-cyan-400 hover:bg-cyan-700 hover:text-white font-gaming font-bold rounded uppercase transition-all tracking-wider"><i class="fa-solid fa-comments mr-2"></i> Kết bạn Zalo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="lightbox-modal" class="modal fixed inset-0 z-[80] flex items-center justify-center bg-black/95 p-4 backdrop-blur-xl" onclick="closeLightbox()">
+        <button class="absolute top-4 right-4 text-white text-5xl hover:text-cyan-500 transition z-50">&times;</button>
+        <img id="lightbox-img" src="" class="max-w-full max-h-full object-contain rounded shadow-2xl animate-float">
+    </div>
+
+
+    <div id="culture-modal" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90">
+        <div class="modal-content max-w-lg glass-panel p-8 rounded-2xl border border-cyan-500/30 text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
+            <i class="fa-solid fa-scale-balanced text-5xl text-cyan-500 mb-4"></i>
+            <h3 class="text-3xl font-gaming font-bold text-white mb-6">VĂN HOÁ CLAN</h3>
+            <div class="text-gray-300 text-justify text-lg leading-relaxed font-light mb-8 space-y-4">
+                <p>Nhóm thoải mái không ràng buộc, có thể nói chuyện hơi bậy, chửi cho đã cái mõm nhưng bít điểm để chửi không phải lôi za phả 18 đời cụ kị ra chửi, mọi hành zi quá khích sẽ bị go out. ĐẶC BIỆT không chứa thể loại 3 we.</p>
+            </div>
+            <button onclick="toggleCultureModal()" class="px-8 py-2 bg-blue-900 hover:bg-blue-800 rounded text-white font-bold transition w-full border border-blue-500">ĐÃ RÕ</button>
+        </div>
+    </div>
+
+
+    <script>
+        let members = [];
+        const colorPalette = ["#00BFFF", "#00FFFF", "#22c55e", "#a855f7", "#FFD700", "#14b8a6", "#6366f1", "#9ca3af", "#06b6d4", "#e2e8f0"];
+
+
+        // --- ĐÃ FIX: Dùng Promise.all tải đồng loạt ---
+        async function loadDynamicMembers() {
+            const fileNames = ['leader'];
+            for (let i = 1; i <= 44; i++) {
+                fileNames.push(`member${i}`);
+            }
+
+
+            const fetchPromises = fileNames.map(async (fileName, index) => {
+                try {
+                    const response = await fetch(`members/${fileName}.html`);
+                    if (response.ok) {
+                        const htmlContent = await response.text();
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = htmlContent.trim();
+                        const card = tempDiv.firstElementChild;
+                        if (card) {
+                            const data = card.dataset;
+                            const imgTag = card.querySelector('.avatar-container img');
+                            
+                            return {
+                                name: data.name,
+                                id: data.id,
+                                avatar: imgTag ? imgTag.src : '',
+                                personalImg: data.pfimg,
+                                zalo: data.zalo,
+                                desc: data.desc,
+                                slogan: data.slogan,
+                                guns: data.guns,
+                                drive: data.storage,
+                                role: fileName === 'leader' ? "CHỦ TEAM" : (data.role || null),
+                                // FIX: Gán màu theo thứ tự index gốc để không bao giờ bị lệch màu
+                                hex: colorPalette[index % colorPalette.length]
+                            };
+                        }
+                    }
+                } catch (error) {
+                    console.error("Lỗi khi tải", fileName, error);
+                }
+                return null;
+            });
+
+
+            const results = await Promise.all(fetchPromises);
+            members = results.filter(member => member !== null);
+
+
+            renderMembers();
+            initParticles();
+        }
+
+
+        let globalLoadTimeout;
+        let memberLoadTimeout;
+
+
+        function startGlobalLoad() {
+            const loader = document.getElementById('global-loader');
+            const bar = document.getElementById('global-bar');
+            bar.style.transition = 'none';
+            bar.style.width = '0%';
+            setTimeout(() => { bar.style.transition = 'width 5s linear'; bar.style.width = '100%'; }, 100);
+            globalLoadTimeout = setTimeout(() => { skipGlobalLoad(); }, 5000);
+        }
+
+
+        function skipGlobalLoad() {
+            const loader = document.getElementById('global-loader');
+            const bar = document.getElementById('global-bar');
+            clearTimeout(globalLoadTimeout);
+            bar.style.transition = 'width 0.2s ease';
+            bar.style.width = '100%';
+            setTimeout(() => { loader.classList.add('hidden'); }, 300);
+        }
+
+
+        // --- ĐÃ FIX: Xóa timeout cũ chống spam click ---
+        function startMemberLoad(index) {
+            clearTimeout(memberLoadTimeout); 
+            
+            const member = members[index];
+            const loader = document.getElementById('member-loader');
+            const bar = document.getElementById('member-bar');
+            const text = document.getElementById('member-loading-text');
+            
+            loader.classList.remove('hidden');
+            text.innerText = `CONNECTING TO ${member.name.toUpperCase()}...`;
+            
+            bar.style.transition = 'none';
+            bar.style.width = '0%';
+            
+            const preloader = new Image();
+            preloader.src = member.personalImg;
+            
+            setTimeout(() => { bar.style.transition = 'width 7s linear'; bar.style.width = '100%'; }, 100);
+            
+            memberLoadTimeout = setTimeout(() => {
+                cancelMemberLoad(); 
+                openProfile(index); 
+            }, 7000);
+        }
+
+
+        function cancelMemberLoad() {
+            const loader = document.getElementById('member-loader');
+            clearTimeout(memberLoadTimeout);
+            loader.classList.add('hidden');
+        }
+
+
+        function renderMembers() {
+            const container = document.getElementById('members-container');
+            let html = '';
+
+
+            members.forEach((member, index) => {
+                const isEven = index % 2 === 0;
+                const flexClasses = isEven ? 'md:flex-row' : 'md:flex-row-reverse';
+                const marginContent = isEven ? 'md:pl-16' : 'md:pr-16';
+                const textDetail = isEven ? 'text-left' : 'md:text-right text-left';
+                const shadowColor = hexToRgb(member.hex);
+                const crown = member.role ? `<div class="absolute -top-4 -left-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-white border border-cyan-300 font-bold px-3 py-1 rounded shadow-lg z-20 animate-bounce"><i class="fa-solid fa-crown"></i> ${member.role}</div>` : '';
+
+
+                html += `
+                <div class="member-card reveal-on-scroll flex flex-col ${flexClasses} items-center group relative p-4" onclick="startMemberLoad(${index})" style="--shadow-color: ${shadowColor}; cursor: pointer;">
+                    <div class="w-full max-w-[280px] md:max-w-[320px] shrink-0 z-20 transition-transform duration-500 group-hover:-translate-y-2 relative">
+                        <div class="tech-border-wrapper relative bg-transparent" style="--shadow-color: ${member.hex}">
+                            <div class="tech-border-frame bg-blue-950">
+                                <div class="tech-border-inner" style="background: ${member.hex}">
+                                     <div class="absolute inset-[2px] bg-black" style="clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);">
+                                         <img src="${member.avatar}" alt="${member.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100 group-hover:blur-[1px]">
+                                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-blue-900/60"></div>
+                                        ${crown}
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="w-full md:w-auto flex-1 mt-6 md:mt-0 ${marginContent} relative z-10">
+                        <div class="glass-panel p-8 md:p-10 relative overflow-hidden rounded-2xl group-hover:bg-blue-900/20 transition-colors">
+                            <div class="absolute top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-[${member.hex}] to-transparent ${isEven ? 'left-0' : 'right-0'}"></div>
+                            
+                            <div class="${textDetail} space-y-2">
+                                <h2 class="text-3xl md:text-5xl font-gaming font-bold text-white uppercase tracking-wider group-hover:text-cyan-300 transition-colors">${member.name}</h2>
+                                <p class="text-cyan-500 font-mono text-lg tracking-widest border-b border-blue-800 inline-block pb-1">UID: ${member.id}</p>
+                                <p class="text-gray-300 mt-4 line-clamp-2 italic">"${member.desc}"</p>
+                                <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0 text-cyan-500 font-bold">
+                                    <i class="fa-solid fa-water animate-pulse"></i> XEM HỒ SƠ
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+            });
+            container.innerHTML = html;
+            initScrollObserver();
+        }
+
+
+        function initParticles() {
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const rainColors = ['#FFFFFF', '#00FFFF', '#E2E8F0'];
+            
+            class Raindrop {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height; 
+                    this.length = Math.random() * 20 + 10;
+                    this.speedY = Math.random() * 5 + 7;
+                    this.speedX = Math.random() * 1 - 0.5;
+                    this.color = rainColors[Math.floor(Math.random() * rainColors.length)];
+                    this.opacity = Math.random() * 0.4 + 0.1;
+                }
+                update() {
+                    this.y += this.speedY;
+                    this.x += this.speedX;
+                    if (this.y > canvas.height) {
+                        this.y = -10;
+                        this.x = Math.random() * canvas.width;
+                    }
+                }
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = this.opacity;
+                    ctx.beginPath();
+                    ctx.fillRect(this.x, this.y, 1.5, this.length);
+                    ctx.fill();
+                    ctx.globalAlpha = 1.0;
+                }
+            }
+
+
+            function init() { particles = []; for (let i = 0; i < 300; i++) particles.push(new Raindrop()); }
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) { particles[i].update(); particles[i].draw(); }
+                requestAnimationFrame(animate);
+            }
+            
+            init(); animate();
+            window.addEventListener('resize', function() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; init(); });
+        }
+
+
+        function initScrollObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal-on-scroll').forEach((el) => { observer.observe(el); });
+        }
+
+
+        function formatScrollingText(text) {
+            if (!text) return "";
+            return text.split(/,|，/).map(seg => `<span class="mx-6 inline-block">${seg.trim()}</span>`).join(' • ');
+        }
+
+
+        function hexToRgb(hex) {
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '255,255,255';
+        }
+
+
+        function toggleCultureModal() { document.getElementById('culture-modal').classList.toggle('active'); }
+
+
+        function openProfile(index) {
+            const member = members[index];
+            const modal = document.getElementById('profile-modal');
+            
+            document.getElementById('modal-img').src = member.personalImg;
+            document.getElementById('modal-img-link').href = member.zalo;
+            document.getElementById('modal-name').innerText = member.name;
+            
+            const badge = document.getElementById('modal-role-badge');
+            badge.innerHTML = member.role ? `<span class="bg-cyan-500 text-blue-950 font-bold px-3 py-1 rounded shadow-lg uppercase tracking-wider"><i class="fa-solid fa-crown"></i> ${member.role}</span>` : `<span class="bg-blue-800 text-white px-3 py-1 rounded uppercase text-sm">Thành viên cốt cán</span>`;
+            document.getElementById('modal-slogan').innerHTML = formatScrollingText(member.slogan);
+            document.getElementById('modal-guns').innerHTML = formatScrollingText(member.guns);
+            document.getElementById('modal-desc').innerText = member.desc;
+            document.getElementById('modal-drive').href = member.drive;
+
+
+            modal.classList.add('active');
+        }
+
+
+        function closeProfile() { document.getElementById('profile-modal').classList.remove('active'); }
+
+
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox-modal');
+            const lightboxImg = document.getElementById('lightbox-img');
+            if(src) { lightboxImg.src = src; lightbox.classList.add('active'); }
+        }
+
+
+        function closeLightbox() { document.getElementById('lightbox-modal').classList.remove('active'); }
+
+
+        window.onload = function() { startGlobalLoad(); loadDynamicMembers(); };
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                if(event.target.id === 'lightbox-modal') closeLightbox(); else event.target.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
