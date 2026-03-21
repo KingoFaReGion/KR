@@ -1,0 +1,14 @@
+﻿<div 
+    data-name="؄MinhTUẤN؄" 
+    data-id="51967566607" 
+    data-zalo="http://zaloapp.com/qr/p/14sgtsws76ar" 
+    data-pfimg="pftv2.png" 
+    data-desc="Đại ra ngấm ngầm của team, im re không bao giờ mở mic, không bao giờ đeo tai nghe, gái theo một nùi." 
+    data-slogan="vua map e, anh đây cân hết" 
+    data-guns="M416, M24, AWM, AUG, ACE32" 
+    data-storage="https://drive.google.com/drive/folders/1YAd35UOQMYV5gLF80trubhv1T3JR18P_">
+    
+    <div class="avatar-container">
+        <img src="avatv2.png" alt="Avatar ؄MinhTUẤN؄">
+    </div>
+</div>

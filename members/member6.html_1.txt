@@ -1,0 +1,14 @@
+﻿<div 
+    data-name="PhanAnh134" 
+    data-id="52404702459" 
+    data-zalo="http://zaloapp.com/qr/p/5nseloelsgqo" 
+    data-pfimg="pftv6.png" 
+    data-desc="Chơi cũng cũng nhưng được cái nhỏ tuổi nhất team và cũng cực xik nhất team, mỗi tội cười nghe như ma dễ nổi da gà." 
+    data-slogan="há há há há há, ờm ờ thì" 
+    data-guns="AKM, UMP, M416, SKS, SLR" 
+    data-storage="https://drive.google.com/drive/folders/1U4abwocQ4jtfUE2pEM6y7P4sZwLJjsNt">
+    
+    <div class="avatar-container">
+        <img src="avatv6.png" alt="Avatar PhanAnh134">
+    </div>
+</div>

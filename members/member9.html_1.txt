@@ -1,0 +1,14 @@
+﻿<div 
+    data-name="SoG丨Sleepy" 
+    data-id="5136701255" 
+    data-zalo="http://zaloapp.com/qr/p/1mm1uqhpcwfw3" 
+    data-pfimg="pftv9.png" 
+    data-desc="Thành Ziên New, Đệm nhìu wá, Bắn rất hay." 
+    data-slogan="Mày bắn anh em tao đừng bắn tao" 
+    data-guns="M416, AUG, S12K, AWM" 
+    data-storage="https://drive.google.com/drive/folders/1tRjVF2lXIBVFTg-0Pi0gnZKEzmMLNapR">
+    
+    <div class="avatar-container">
+        <img src="avatv9.png" alt="Avatar SoG丨Sleepy">
+    </div>
+</div>

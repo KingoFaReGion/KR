@@ -1,0 +1,14 @@
+﻿<div 
+    data-name="『KR・HANA』" 
+    data-id="51909794820" 
+    data-zalo="https://zaloapp.com/qr/p/1ua7iuy9l97nm?src=qr" 
+    data-pfimg="pftv4.png" 
+    data-desc="lang băm hại đồng đội, vì gái bỏ ae, cha nam chuyên dụ dỗ gái nhà lành." 
+    data-slogan="còn thở là còn loot, top 1 là số 2 ae là số 1, hay bắn không hay cứu đồng đội là chính" 
+    data-guns="M24, M762, SCAR-L" 
+    data-storage="https://drive.google.com/drive/folders/1CdvGwDGvFA1Tr6z77299T7gAdMONG5Lb">
+    
+    <div class="avatar-container">
+        <img src="avatv4.png" alt="Avatar 『KR・HANA』">
+    </div>
+</div>

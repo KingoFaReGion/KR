@@ -1,0 +1,14 @@
+﻿<div 
+    data-name="Bảnk・Embé・" 
+    data-id="5281916668" 
+    data-zalo="http://zaloapp.com/qr/p/1b47i3sgeaoeu" 
+    data-pfimg="pftv5.png" 
+    data-desc="Dễ ăn, dễ nói, coi money như mạng, bán mình cho tư bản." 
+    data-slogan="tất cả tại hana" 
+    data-guns="AWM, M416, AKM, UMP" 
+    data-storage="https://drive.google.com/drive/folders/1UmO2vthpzApE4HgBAYLBi6sWYWDJBuaJ">
+    
+    <div class="avatar-container">
+        <img src="avatv5.png" alt="Avatar Bảnk・Embé・">
+    </div>
+</div>

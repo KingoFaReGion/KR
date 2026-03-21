@@ -1,0 +1,14 @@
+﻿<div 
+    data-name="『KR・xhậu』" 
+    data-id="51611570360" 
+    data-zalo="http://zaloapp.com/qr/p/1t6touy57mekd" 
+    data-pfimg="pftv3.png" 
+    data-desc="Con đại báo của team, thấy rút nade là sẽ có 1 người trong team nock. Wâybua riêu." 
+    data-slogan="đỉ mẹ, wâybua bị kiệt tha hoá" 
+    data-guns="M416, AKM, AWM" 
+    data-storage="https://drive.google.com/drive/folders/1AVmV2X1kFDv-_OM8I6-4So-kl49LJ_Xd">
+    
+    <div class="avatar-container">
+        <img src="avatv3.png" alt="Avatar KR・xhậu">
+    </div>
+</div>
