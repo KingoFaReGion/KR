@@ -1,0 +1,14 @@
+﻿<div 
+    data-name="aizì" 
+    data-id="52249497583" 
+    data-zalo="https://zaloapp.com/qr/p/xzt278d8oiyv?src=qr" 
+    data-pfimg="pftv7.png" 
+    data-desc="Ít Lói, bắn cũng cũng" 
+    data-slogan="mày có cảnh à" 
+    data-guns="AUG, AKM, Vector, P90, DBS" 
+    data-storage="https://drive.google.com/drive/folders/1_C9ytsc9-LtF-f_4F5urP1DW1--e5CCj">
+    
+    <div class="avatar-container">
+        <img src="avatv7.png" alt="Avatar aizì">
+    </div>
+</div>
