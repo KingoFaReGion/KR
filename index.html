@@ -76,7 +76,7 @@
             100% { transform: scale(1) translate(var(--tx), var(--ty)); opacity: 0; }
         }
 
-        /* --- 7-COLOR RAINBOW BORDER (HIỆU ỨNG 7 MÀU KHUNG AVATAR TRONG MODAL) --- */
+        /* --- 7-COLOR RAINBOW BORDER --- */
         .rainbow-border-animated {
             border: 4px solid transparent; animation: rainbow-loop 3s linear infinite;
         }
@@ -90,10 +90,10 @@
             85% { border-color: #9400d3; box-shadow: 0 0 15px #9400d3; }
         }
 
-        /* --- AVATAR FLASHING BORDER (VIỀN NHÁY 7 MÀU TRANG CHỦ) --- */
+        /* --- AVATAR FLASHING BORDER --- */
         .avatar-flashing-border {
             border: 3px solid transparent;
-            animation: rainbow-flash-fast 0.8s linear infinite; /* Nháy tốc độ nhanh */
+            animation: rainbow-flash-fast 0.8s linear infinite;
         }
         @keyframes rainbow-flash-fast {
             0%, 100% { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; }
@@ -105,7 +105,7 @@
             85% { border-color: #9400d3; box-shadow: 0 0 20px #9400d3; }
         }
 
-        /* --- SPINNING RECORD WITH DISCO LIGHTS --- */
+        /* --- SPINNING RECORD --- */
         @keyframes spin-record {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -117,17 +117,13 @@
             0% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
             14% { border-color: #ff7f00; box-shadow: 0 0 15px #ff7f00; }
             28% { border-color: #ffff00; box-shadow: 0 0 15px #ffff00; }
-            42% { border-color: #00ff00; box-shadow: 0 0 15px #00ff00; }
-            57% { border-color: #0000ff; box-shadow: 0 0 15px #0000ff; }
-            71% { border-color: #4b0082; box-shadow: 0 0 15px #4b0082; }
-            85% { border-color: #9400d3; box-shadow: 0 0 15px #9400d3; }
             100% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
         }
         .disco-lights {
             animation: disco-lights 0.8s linear infinite;
         }
 
-        /* --- PULSE GLOW BUTTON (HIỆU ỨNG THỞ NÚT GIA NHẬP) --- */
+        /* --- PULSE GLOW BUTTON --- */
         @keyframes pulseGlow {
             0% { box-shadow: 0 0 15px rgba(34,211,238,0.4); transform: scale(1); }
             50% { box-shadow: 0 0 35px rgba(34,211,238,0.8), 0 0 10px rgba(255,255,255,0.5); transform: scale(1.03); }
@@ -176,8 +172,57 @@
             clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
         }
 
-        /* --- GLASSMORPHISM UI --- */
-        .glass-panel { background: rgba(0, 20, 30, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(0, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6); }
+        /* =========================================
+           --- LIQUID GLASSMORPHISM UI (THÊM MỚI) ---
+           ========================================= */
+        .glass-panel, .liquid-glass {
+            position: relative;
+            background: rgba(5, 15, 35, 0.45) !important;
+            backdrop-filter: blur(16px) saturate(120%);
+            -webkit-backdrop-filter: blur(16px) saturate(120%);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 255, 255, 0.05);
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Hiệu ứng chất lỏng đổi màu bên trong lớp kính */
+        .glass-panel::before, .liquid-glass::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                rgba(0, 229, 255, 0.25), /* Xanh Neon */
+                rgba(168, 85, 247, 0.2),  /* Tím */
+                rgba(255, 0, 128, 0.15),  /* Hồng Neon */
+                rgba(0, 255, 128, 0.2),   /* Xanh lá Neon */
+                rgba(0, 102, 255, 0.25)   /* Xanh dương đậm */
+            );
+            background-size: 400% 400%;
+            animation: liquidGradient 12s ease infinite, spinLiquid 20s linear infinite;
+            z-index: -1;
+            /* Tạo hình dáng mềm mại như chất lỏng */
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            filter: blur(25px);
+            pointer-events: none;
+        }
+
+        @keyframes liquidGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes spinLiquid {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        /* ========================================= */
 
         /* --- MODAL --- */
         .modal { opacity: 0; visibility: hidden; transition: all 0.4s ease; backdrop-filter: blur(12px); }
@@ -257,8 +302,8 @@
         </div>
     </header>
 
-    <!-- DẢI MARQUEE VĂN HÓA CLAN -->
-    <div class="w-full bg-cyan-900/30 border-y border-cyan-500/40 py-3 overflow-hidden relative z-10 mb-12 backdrop-blur-sm shadow-[0_0_15px_rgba(34,211,238,0.2)]">
+    <!-- DẢI MARQUEE VĂN HÓA CLAN (Đã cập nhật Liquid Glass) -->
+    <div class="w-full liquid-glass border-y border-cyan-500/40 py-3 overflow-hidden relative z-10 mb-12 shadow-[0_0_15px_rgba(34,211,238,0.2)]">
         <div class="whitespace-nowrap flex animate-marquee-slow text-cyan-200 font-mono text-sm md:text-base uppercase tracking-widest font-semibold">
             <span class="mx-6"><i class="fa-solid fa-triangle-exclamation text-yellow-400 mr-2"></i>Văn hoá Clan: Thoải mái không ràng buộc, có thể nói bậy, chửi cho đã mõm nhưng biết điểm dừng. KHÔNG lôi gia phả ra chửi!</span>
             <span class="mx-6"><i class="fa-solid fa-ban text-red-500 mr-2"></i>Mọi hành vi quá khích sẽ bị GO OUT.</span>
@@ -278,6 +323,7 @@
             </h2>
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full md:w-1/2 h-16 bg-blue-600/30 blur-2xl rounded-full -z-0"></div>
         </div>
+        <!-- Các thẻ thành viên sẽ tự động nhận Liquid Glass nhờ class .glass-panel sinh ra từ JS -->
         <div id="members-container" class="space-y-24"></div>
     </main>
 
@@ -307,9 +353,10 @@
         <p class="text-blue-500 text-sm mt-2 font-tet">KR Clan Design by <span class="text-cyan-500 font-bold">THE BÁO</span></p>
     </footer>
 
-    <!-- PROFILE MODAL -->
+    <!-- PROFILE MODAL (Đã cập nhật Liquid Glass) -->
     <div id="profile-modal" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90">
-        <div class="modal-content relative w-full max-w-5xl bg-[#00111a] rounded-xl overflow-hidden shadow-[0_0_50px_rgba(0,191,255,0.2)] flex flex-col md:flex-row border border-cyan-900 max-h-[90vh] h-auto">
+        <!-- Đổi bg-[#00111a] thành class liquid-glass -->
+        <div class="modal-content relative w-full max-w-5xl liquid-glass rounded-xl shadow-[0_0_50px_rgba(0,191,255,0.2)] flex flex-col md:flex-row border border-cyan-900 max-h-[90vh] h-auto">
             <button onclick="closeProfile()" class="absolute top-4 right-4 z-50 text-gray-400 hover:text-cyan-500 transition text-2xl bg-black/50 w-10 h-10 rounded-full flex items-center justify-center">
                 <i class="fa-solid fa-times"></i>
             </button>
@@ -321,7 +368,8 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full md:w-7/12 p-6 md:p-8 flex flex-col overflow-y-auto bg-[url('https://www.transparenttextures.com/patterns/black-scales.png')] tilt-effect">
+            <!-- Thêm bg-black/40 để chữ dễ đọc hơn trên nền kính lỏng -->
+            <div class="w-full md:w-7/12 p-6 md:p-8 flex flex-col overflow-y-auto bg-[url('https://www.transparenttextures.com/patterns/black-scales.png')] tilt-effect bg-black/40">
                 <div class="min-h-min pb-10">
                     
                     <div class="flex justify-between items-start gap-4">
@@ -330,7 +378,7 @@
                             <div id="modal-role-badge" class="mb-6"></div>
                         </div>
                         
-                        <!-- Đĩa nhạc đang xoay có đèn nháy (Hiển thị khi mở hồ sơ) -->
+                        <!-- Đĩa nhạc đang xoay có đèn nháy -->
                         <div id="music-player-record" class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-black flex items-center justify-center relative spinning-record disco-lights flex-shrink-0 mt-4 md:mt-0 shadow-lg border-[3px] hidden">
                             <div class="absolute inset-1 rounded-full border border-gray-700"></div>
                             <div class="absolute inset-[6px] rounded-full border border-gray-600"></div>
@@ -344,25 +392,25 @@
                     </div>
 
                     <div class="space-y-8">
-                        <div class="bg-blue-950/40 border-l-4 border-cyan-500 pt-7 pb-3 px-4 rounded-r relative group mt-2">
+                        <div class="bg-blue-950/60 border-l-4 border-cyan-500 pt-7 pb-3 px-4 rounded-r relative group mt-2">
                             <span class="text-xs text-cyan-500 uppercase font-bold tracking-widest absolute -top-3 left-0 bg-blue-950 px-2 py-1 border border-cyan-500/30 rounded shadow-md z-10"><i class="fa-solid fa-quote-left mr-1"></i> Slogan</span>
                             <div class="marquee-container overflow-hidden whitespace-nowrap w-full">
                                 <div id="modal-slogan" class="inline-block animate-marquee-slow font-gaming text-xl text-cyan-100 py-1"></div>
                             </div>
                         </div>
-                        <div class="bg-blue-950/40 border-l-4 border-teal-500 pt-7 pb-3 px-4 rounded-r relative group">
+                        <div class="bg-blue-950/60 border-l-4 border-teal-500 pt-7 pb-3 px-4 rounded-r relative group">
                             <span class="text-xs text-teal-500 uppercase font-bold tracking-widest absolute -top-3 left-0 bg-blue-950 px-2 py-1 border border-teal-500/30 rounded shadow-md z-10"><i class="fa-solid fa-crosshairs mr-1"></i> Sở trường</span>
                             <div class="marquee-container overflow-hidden whitespace-nowrap w-full">
                                 <div id="modal-guns" class="inline-block animate-marquee-normal font-bold text-lg text-white py-1"></div>
                             </div>
                         </div>
-                        <div class="bg-blue-950/40 border-l-4 border-blue-500 pt-8 pb-4 px-5 rounded-r relative">
+                        <div class="bg-blue-950/60 border-l-4 border-blue-500 pt-8 pb-4 px-5 rounded-r relative">
                             <span class="text-xs text-blue-500 uppercase font-bold tracking-widest absolute -top-3 left-0 bg-blue-950 px-2 py-1 border border-blue-500/30 rounded shadow-md z-10"><i class="fa-solid fa-id-card mr-1"></i> Tiểu sử</span>
                             <p id="modal-desc" class="text-gray-300 italic leading-relaxed text-base"></p>
                         </div>
                         <div class="flex flex-col gap-3 mt-4">
-                            <a id="modal-drive" href="#" target="_blank" class="block w-full py-4 text-center border border-green-600 text-green-400 hover:bg-green-700 hover:text-white font-gaming font-bold rounded uppercase transition-all tracking-wider"><i class="fa-brands fa-google-drive mr-2"></i> Truy cập Kho Lưu Trữ</a>
-                            <a id="modal-img-link" href="#" target="_blank" class="block w-full py-4 text-center border border-cyan-600 text-cyan-400 hover:bg-cyan-700 hover:text-white font-gaming font-bold rounded uppercase transition-all tracking-wider"><i class="fa-solid fa-comments mr-2"></i> Mạng Xã Hội</a>
+                            <a id="modal-drive" href="#" target="_blank" class="block w-full py-4 text-center border border-green-600 text-green-400 hover:bg-green-700 hover:text-white font-gaming font-bold rounded uppercase transition-all tracking-wider backdrop-blur-sm"><i class="fa-brands fa-google-drive mr-2"></i> Truy cập Kho Lưu Trữ</a>
+                            <a id="modal-img-link" href="#" target="_blank" class="block w-full py-4 text-center border border-cyan-600 text-cyan-400 hover:bg-cyan-700 hover:text-white font-gaming font-bold rounded uppercase transition-all tracking-wider backdrop-blur-sm"><i class="fa-solid fa-comments mr-2"></i> Mạng Xã Hội</a>
                         </div>
                     </div>
                 </div>
@@ -378,6 +426,7 @@
 
     <!-- CULTURE MODAL -->
     <div id="culture-modal" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90">
+        <!-- Đã có class glass-panel nên nó cũng sẽ có hiệu ứng liquid glass tự động -->
         <div class="modal-content max-w-lg glass-panel p-8 rounded-2xl border border-cyan-500/30 text-center relative overflow-hidden tilt-effect">
             <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
             <i class="fa-solid fa-scale-balanced text-5xl text-cyan-500 mb-4"></i>
@@ -385,7 +434,7 @@
             <div class="text-gray-300 text-justify text-lg leading-relaxed font-light mb-8 space-y-4">
                 <p>Nhóm thoải mái không ràng buộc, có thể nói chuyện hơi bậy, chửi cho đã cái mõm nhưng bít điểm để chửi không phải lôi za phả 18 đời cụ kị ra chửi, mọi hành zi quá khích sẽ bị go out. ĐẶC BIỆT không chứa thể loại 3 we.</p>
             </div>
-            <button onclick="toggleCultureModal()" class="px-8 py-2 bg-blue-900 hover:bg-blue-800 rounded text-white font-bold transition w-full border border-blue-500">ĐÃ RÕ</button>
+            <button onclick="toggleCultureModal()" class="px-8 py-2 bg-blue-900/80 hover:bg-blue-800 rounded text-white font-bold transition w-full border border-blue-500">ĐÃ RÕ</button>
         </div>
     </div>
 
@@ -440,7 +489,6 @@
                     const centerX = rect.width / 2;
                     const centerY = rect.height / 2;
                     
-                    // Góc xoay max nhẹ nhàng (5 độ) để không gây rối mắt
                     const rotateX = ((y - centerY) / centerY) * -5;
                     const rotateY = ((x - centerX) / centerX) * 5;
                     
@@ -546,7 +594,6 @@
                     <div class="w-full max-w-[280px] md:max-w-[320px] shrink-0 z-20 transition-transform duration-500 group-hover:-translate-y-2 relative tilt-effect">
                         <div class="tech-border-wrapper relative bg-transparent" style="--shadow-color: ${member.hex}">
                             <div class="tech-border-frame bg-blue-950">
-                                <!-- Áp dụng viền nháy 7 màu liên tục cho khung ảnh thẻ -->
                                 <div class="tech-border-inner avatar-flashing-border bg-black">
                                      <div class="absolute inset-[3px] bg-black" style="clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);">
                                          <img src="${member.avatar}" alt="${member.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100 group-hover:blur-[1px]">
@@ -580,7 +627,7 @@
             });
             container.innerHTML = html;
             initScrollObserver();
-            init3DTilt(); // Khởi chạy 3D Tilt sau khi DOM render xong
+            init3DTilt();
         }
 
         function initParticles() {
@@ -652,22 +699,17 @@
                 currentAudio.pause();
                 currentAudio.currentTime = 0;
             }
-            // Index 0 luôn là chủ team -> msboss.mp3. Các index 1 tới 44 là -> mstv{index}.mp3
             let audioFile = (index === 0) ? "msboss.mp3" : `mstv${index}.mp3`;
             currentAudio = new Audio(audioFile);
-            currentAudio.loop = true; // Lặp lại liên tục khi hết bài
+            currentAudio.loop = true; 
             currentAudio.play().catch(e => console.log("Trình duyệt tạm thời chặn âm thanh autoplay tự động, vui lòng tương tác trước:", e));
             
-            // Bật đĩa nhạc
             document.getElementById('music-player-record').classList.remove('hidden');
-
             modal.classList.add('active');
         }
 
         function closeProfile() { 
             document.getElementById('profile-modal').classList.remove('active'); 
-            
-            // Tắt Audio và ẩn đĩa nhạc
             if (currentAudio) {
                 currentAudio.pause();
                 currentAudio = null;
@@ -690,7 +732,6 @@
                     closeLightbox(); 
                 } else {
                     event.target.classList.remove('active');
-                    // Tắt âm thanh nếu click ra bên ngoài để đóng modal profile
                     if (event.target.id === 'profile-modal') {
                         if (currentAudio) {
                             currentAudio.pause();
