@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KingoFaReGion</title> 
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen selection:bg-orange-500 selection:text-white">
+
+    <div class="fixed top-8 right-8 md:top-12 md:right-20 w-28 h-28 md:w-40 md:h-40 rounded-full pointer-events-none z-0 opacity-75"
+         style="background: radial-gradient(circle at 35% 35%, #fff7ed 0%, #fbbf24 30%, #ff6b00 68%, rgba(239,68,68,0.4) 90%, transparent 100%); box-shadow: 0 0 60px rgba(255,107,0,0.5), 0 0 120px rgba(168,85,247,0.3);">
+        <div class="absolute inset-0 flex items-center justify-center animate-broom opacity-85">
+            <svg viewBox="0 0 120 60" class="w-24 md:w-32 h-auto">
+                <path d="M10 38 L85 26" stroke="#1a0526" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M5 38 C12 29, 22 30, 26 35 C22 42, 12 45, 4 41 Z" fill="#1a0526"/>
+                <polygon points="55,8 46,24 68,22" fill="#1a0526"/>
+                <ellipse cx="57" cy="23" rx="14" ry="3" fill="#1a0526"/>
+                <circle cx="56" cy="28" r="5" fill="#1a0526"/>
+                <path d="M48 31 Q58 29 66 36 L50 38 Z" fill="#1a0526"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="fixed top-0 left-0 w-44 h-44 md:w-64 md:h-64 pointer-events-none z-30 opacity-60">
+        <svg viewBox="0 0 200 200" class="w-full h-full stroke-orange-300/40 fill-none" stroke-width="1.2">
+            <line x1="0" y1="0" x2="200" y2="20"/>
+            <line x1="0" y1="0" x2="180" y2="85"/>
+            <line x1="0" y1="0" x2="145" y2="145"/>
+            <line x1="0" y1="0" x2="85" y2="180"/>
+            <line x1="0" y1="0" x2="20" y2="200"/>
+            <path d="M40 4 Q36 22 28 28 Q20 35 4 40"/>
+            <path d="M80 8 Q72 42 56 56 Q40 70 8 80"/>
+            <path d="M125 12 Q110 65 88 88 Q65 110 12 125"/>
+            <path d="M170 17 Q148 88 118 118 Q88 148 17 170"/>
+        </svg>
+        <div class="absolute top-0 left-12 animate-spider">
+            <div class="w-[1px] h-20 bg-orange-200/50 mx-auto"></div>
+            <div class="text-orange-400 text-xl -mt-1">
+                <i class="fa-solid fa-spider"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed top-0 right-0 w-44 h-44 md:w-64 md:h-64 pointer-events-none z-30 opacity-50 scale-x-[-1]">
+        <svg viewBox="0 0 200 200" class="w-full h-full stroke-purple-300/40 fill-none" stroke-width="1.2">
+            <line x1="0" y1="0" x2="200" y2="20"/>
+            <line x1="0" y1="0" x2="180" y2="85"/>
+            <line x1="0" y1="0" x2="145" y2="145"/>
+            <line x1="0" y1="0" x2="85" y2="180"/>
+            <line x1="0" y1="0" x2="20" y2="200"/>
+            <path d="M40 4 Q36 22 28 28 Q20 35 4 40"/>
+            <path d="M80 8 Q72 42 56 56 Q40 70 8 80"/>
+            <path d="M125 12 Q110 65 88 88 Q65 110 12 125"/>
+            <path d="M170 17 Q148 88 118 118 Q88 148 17 170"/>
+        </svg>
+    </div>
+
+    <div id="halloween-sky-layer"></div>
+    <div id="halloween-modal-fx-layer"></div>
+
+    <a href="https://zalo.me/g/eipdae678" target="_blank" class="sticky-fab w-14 h-14 bg-gradient-to-tr from-orange-600 via-amber-500 to-purple-600 rounded-full flex items-center justify-center text-white text-3xl shadow-[0_0_25px_rgba(255,107,0,0.85)] border border-orange-200/80">
+        <i class="fa-solid fa-comment-dots"></i>
+        <span class="absolute -top-2 -left-2 text-lg animate-bounce">🎃</span>
+    </a>
+
+    <div id="global-loader" class="loading-screen">
+        <button onclick="skipGlobalLoad()" class="close-loader-btn text-xl"><i class="fa-solid fa-xmark"></i></button>
+        <div class="relative mb-6 flex items-center justify-center">
+            <div class="text-orange-500 text-6xl animate-pumpkin">🎃</div>
+            <div class="absolute -top-5 -right-8 text-3xl animate-broom">🧹</div>
+            <div class="absolute -bottom-3 -left-8 text-2xl bat-wing-anim">🦇</div>
+        </div>
+        <div class="loader-text text-orange-400 mb-2">LOADING CLAN DATA...</div>
+        <div class="loader-bar-container border border-orange-500/40">
+            <div id="global-bar" class="loader-bar global"></div>
+        </div>
+    </div>
+
+    <div id="member-loader" class="loading-screen hidden bg-black/90 backdrop-blur-xl">
+        <button onclick="cancelMemberLoad()" class="close-loader-btn text-xl"><i class="fa-solid fa-xmark"></i></button>
+        <div class="relative mb-6 flex items-center justify-center gap-4">
+            <span class="text-4xl bat-wing-anim">🦇</span>
+            <div class="text-orange-400 text-6xl animate-bounce">🎃</div>
+            <span class="text-4xl animate-broom">🧹</span>
+        </div>
+        <div id="member-loading-text" class="loader-text text-orange-400 mb-2">CONNECTING...</div>
+        <div class="loader-bar-container border border-purple-500/50">
+            <div id="member-bar" class="loader-bar member"></div>
+        </div>
+        <div class="mt-4 text-orange-200/80 text-sm font-mono animate-pulse">Đang kết nối tải hồ sơ ...</div>
+    </div>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <header class="relative w-full mb-0">
+        <div class="w-full h-[60vh] md:h-[80vh] relative overflow-hidden group">
+            <div class="absolute inset-0 bg-gradient-to-b from-purple-950/40 via-orange-950/20 to-[#06020c] z-10"></div>
+            <img src="team.png" class="w-full h-full object-cover object-top transition-transform duration-[3s] group-hover:scale-105 filter group-hover:blur-[2px] transition-all" alt="Clan Banner">
+            
+            <div class="absolute inset-0 z-20 pointer-events-none overflow-hidden">
+                <div class="absolute top-12 left-[10%] text-3xl md:text-4xl bat-wing-anim opacity-90">🦇</div>
+                <div class="absolute top-24 left-[22%] text-xl md:text-2xl bat-wing-anim opacity-75" style="animation-delay:0.15s">🦇</div>
+                <div class="absolute top-16 right-[14%] text-3xl md:text-4xl animate-broom opacity-90">🧹</div>
+                <div class="absolute bottom-20 left-[8%] text-4xl md:text-5xl animate-pumpkin">🎃</div>
+                <div class="absolute bottom-24 right-[8%] text-4xl md:text-5xl animate-pumpkin" style="animation-delay:1.2s">🎃</div>
+            </div>
+
+            <div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
+                <div class="animate-float">
+                    <p class="font-gaming text-4xl md:text-5xl text-orange-100 mb-2 drop-shadow-[0_0_15px_rgba(255,107,0,0.8)]">Welcome to KingoFaReGion</p>
+                    <div class="glitch-wrapper mb-2">
+                        <h1 class="glitch font-gaming text-4xl md:text-7xl font-black uppercase tracking-wider" data-text="Gia Đình Nhìu Chiện">
+                            Gia Đình Nhìu Chiện
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute bottom-0 w-full h-32 bg-gradient-to-t from-[var(--bg-dark)] to-transparent z-20"></div>
+        </div>
+    </header>
+
+    <div class="w-full liquid-glass border-y border-orange-500/40 py-3 overflow-hidden relative z-10 mb-12 shadow-[0_0_25px_rgba(255,107,0,0.2)]">
+        <div class="whitespace-nowrap flex animate-marquee-slow text-orange-100 font-mono text-sm md:text-base uppercase tracking-widest font-semibold">
+            <span class="mx-6">🎃 <i class="fa-solid fa-triangle-exclamation text-amber-400 mr-2"></i>Văn hoá Clan: Thoải mái không ràng buộc, có thể nói bậy, chửi cho đã mõm nhưng biết điểm dừng. KHÔNG lôi gia phả ra chửi!</span>
+            <span class="mx-6">🧹 <i class="fa-solid fa-ban text-red-500 mr-2"></i>Mọi hành vi quá khích sẽ bị GO OUT.</span>
+            <span class="mx-6">🦇 <i class="fa-solid fa-skull-crossbones text-orange-500 mr-2"></i>ĐẶC BIỆT KHÔNG CHỨA THỂ LOẠI 3 WE. 🍬</span>
+            
+            <span class="mx-6">🎃 <i class="fa-solid fa-triangle-exclamation text-amber-400 mr-2"></i>Văn hoá Clan: Thoải mái không ràng buộc, có thể nói bậy, chửi cho đã mõm nhưng biết điểm dừng. KHÔNG lôi gia phả ra chửi!</span>
+            <span class="mx-6">🧹 <i class="fa-solid fa-ban text-red-500 mr-2"></i>Mọi hành vi quá khích sẽ bị GO OUT.</span>
+            <span class="mx-6">🦇 <i class="fa-solid fa-skull-crossbones text-orange-500 mr-2"></i>ĐẶC BIỆT KHÔNG CHỨA THỂ LOẠI 3 WE. 🍬</span>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 pb-20 max-w-6xl relative z-10">
+        <div class="text-center mb-16 relative">
+            <div class="flex items-center justify-center gap-3 md:gap-5">
+                <span class="text-3xl md:text-4xl animate-pumpkin">🎃</span>
+                <span class="text-2xl md:text-3xl animate-broom">🧹</span>
+                <h2 class="text-4xl md:text-5xl font-gaming font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-purple-400 inline-block relative z-10 drop-shadow-[0_0_15px_rgba(255,107,0,0.4)]">
+                    THÀNH VIÊN NỔI BẬT
+                </h2>
+                <span class="text-2xl md:text-3xl bat-wing-anim">🦇</span>
+                <span class="text-3xl md:text-4xl animate-pumpkin" style="animation-delay:0.8s">🎃</span>
+            </div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full md:w-1/2 h-16 bg-orange-600/25 blur-2xl rounded-full -z-0"></div>
+        </div>
+        <div id="members-container" class="space-y-24"></div>
+    </main>
+
+    <div class="text-center pb-12 flex flex-col items-center gap-8 relative z-10">
+        <div class="flex flex-col items-center mb-4">
+            <span class="text-orange-300/90 text-sm italic mb-3 font-mono drop-shadow-md">
+                <i class="fa-solid fa-fire-flame-curved text-orange-500 mr-1"></i> Slot đang mở cho 40+ anh em thiện lành tham gia chạy bo mỗi tối
+            </span>
+            <div class="flex flex-wrap gap-4 justify-center px-4 w-full">
+                <a href="https://zalo.me/g/eipdae678" target="_blank" class="btn-pulse-glow relative px-10 py-4 bg-gradient-to-r from-orange-600 via-amber-600 to-purple-700 overflow-hidden rounded-xl group transition-all border border-orange-300/80">
+                    <span class="absolute w-0 h-full bg-white/20 left-0 top-0 transition-all duration-500 group-hover:w-full skew-x-12"></span>
+                    <span class="relative font-bold text-xl text-white tracking-widest"><i class="fa-solid fa-handshake-angle mr-2"></i> GIA NHẬP CLAN NGAY</span>
+                </a>
+                <a href="https://photos.app.goo.gl/xz763ZtwfMHn6JGt7" target="_blank" class="liquid-glass relative px-8 py-4 overflow-hidden rounded-xl group transition-all flex items-center">
+                     <span class="absolute w-0 h-full bg-orange-500/20 left-0 top-0 transition-all duration-300 group-hover:w-full"></span>
+                     <span class="relative font-bold text-lg text-orange-200 uppercase"><i class="fa-solid fa-camera-retro mr-2 text-purple-400"></i>Kỷ Niệm Clan</span>
+                 </a>
+            </div>
+        </div>
+        
+        <button onclick="toggleCultureModal()" class="liquid-glass group relative inline-flex items-center justify-center px-8 py-3 font-bold text-orange-200 transition-all duration-200 rounded-xl hover:text-white text-sm">
+            <span><i class="fa-solid fa-scroll mr-2 text-orange-400"></i> Đọc lại Văn Hoá Nhóm</span>
+        </button>
+    </div>
+
+    <footer class="py-8 liquid-glass text-center border-t border-orange-500/30 relative z-10">
+        <div class="flex justify-center gap-4 text-xl mb-2">
+            <span class="animate-pumpkin">🎃</span>
+            <span class="bat-wing-anim">🦇</span>
+            <span class="animate-broom">🧹</span>
+            <span>🧪</span>
+            <span>🍬</span>
+            <span>🕯️</span>
+        </div>
+        <p class="text-orange-100/80 font-mono">3/2026 Gia Đình Nhiều Chiện PUBG - KingoFaReGion</p>
+        <p class="text-purple-400 text-sm mt-2 font-tet">KR Clan Design by <span class="text-orange-400 font-bold">THE BÁO</span></p>
+    </footer>
+
+    <div id="profile-modal" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50">
+        <div class="modal-content relative w-full max-w-5xl liquid-glass rounded-2xl flex flex-col md:flex-row max-h-[90vh] h-auto">
+            
+            <svg viewBox="0 0 120 120" class="absolute top-0 left-0 w-28 h-28 stroke-orange-300/35 fill-none pointer-events-none z-20" stroke-width="1.2">
+                <line x1="0" y1="0" x2="120" y2="15"/><line x1="0" y1="0" x2="105" y2="65"/><line x1="0" y1="0" x2="65" y2="105"/><line x1="0" y1="0" x2="15" y2="120"/>
+                <path d="M35 4 Q28 28 4 35"/><path d="M70 9 Q55 55 9 70"/><path d="M105 14 Q82 82 14 105"/>
+            </svg>
+            <div class="absolute top-0 left-8 pointer-events-none z-30 animate-spider">
+                <div class="w-[1px] h-12 bg-orange-300/50 mx-auto"></div>
+                <i class="fa-solid fa-spider text-orange-400 text-sm -mt-1 block"></i>
+            </div>
+
+            <div class="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-4 pointer-events-none z-30 opacity-90">
+                <span class="text-xl bat-wing-anim">🦇</span>
+                <span class="text-2xl animate-broom">🧹</span>
+                <span class="text-xl animate-pumpkin">🎃</span>
+                <span class="text-xl bat-wing-anim" style="animation-delay:0.2s">🦇</span>
+            </div>
+
+            <button onclick="closeProfile()" class="absolute top-4 right-4 z-50 text-orange-200 hover:text-white hover:bg-orange-600/40 transition text-2xl liquid-subglass w-11 h-11 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-times"></i>
+            </button>
+
+            <div class="w-full md:w-5/12 bg-transparent p-5 flex flex-col items-center justify-center relative shrink-0 border-b md:border-b-0 md:border-r border-white/15">
+                <div class="profile-img-frame rainbow-border-animated group">
+                    <img id="modal-img" src="" decoding="async" class="cursor-pointer" alt="Profile" onclick="openLightbox(this.src)">
+                    <div class="absolute top-2 left-2 text-2xl pointer-events-none animate-pumpkin">🎃</div>
+                    <div class="absolute top-2 right-2 text-2xl pointer-events-none bat-wing-anim">🦇</div>
+                    <div class="absolute bottom-2 right-2 text-2xl pointer-events-none animate-broom">🧹</div>
+                    <div class="absolute bottom-2 left-0 w-full text-center text-xs text-orange-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none bg-black/60 py-1">
+                        <i class="fa-solid fa-expand"></i> Chạm để xem full
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-7/12 p-6 md:p-8 flex flex-col overflow-y-auto bg-transparent relative">
+                <div class="min-h-min pb-8 relative z-10">
+                    
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <h2 id="modal-name" class="text-4xl md:text-5xl font-gaming font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-300 via-amber-200 to-purple-400 mb-2 mt-4 md:mt-0 drop-shadow-[0_2px_10px_rgba(255,107,0,0.6)]">NAME</h2>
+                            <div id="modal-role-badge" class="mb-6"></div>
+                        </div>
+                        
+                        <div id="music-player-record" class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-black/75 flex items-center justify-center relative spinning-record disco-lights flex-shrink-0 mt-2 md:mt-0 shadow-lg border-[3px] hidden">
+                            <div class="absolute inset-1 rounded-full border border-orange-500/40"></div>
+                            <div class="absolute inset-[6px] rounded-full border border-purple-500/40"></div>
+                            <div class="absolute inset-3 rounded-full border border-amber-500/40"></div>
+                            <div class="w-5 h-5 md:w-6 md:h-6 bg-gradient-to-tr from-orange-500 to-purple-600 rounded-full z-10 flex items-center justify-center text-xs">
+                                🎃
+                            </div>
+                            <i class="fa-solid fa-music absolute -top-1 -right-1 text-orange-400 animate-bounce text-xs"></i>
+                            <i class="fa-solid fa-ghost absolute -bottom-1 -left-1 text-purple-300 animate-bounce text-xs" style="animation-delay: 0.5s"></i>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                        <div class="liquid-subglass border-l-4 border-orange-500 pt-7 pb-3 px-4 rounded-xl relative group mt-2">
+                            <span class="text-xs text-orange-300 uppercase font-bold tracking-widest absolute -top-3 left-3 bg-[#1a0826] px-3 py-1 border border-orange-500/60 rounded-full shadow-md z-10">
+                                🎃 <i class="fa-solid fa-quote-left mr-1 text-orange-400"></i> Slogan
+                            </span>
+                            <span class="absolute top-2 right-3 text-lg opacity-80 bat-wing-anim">🦇</span>
+                            <div class="marquee-container overflow-hidden whitespace-nowrap w-full">
+                                <div id="modal-slogan" class="inline-block animate-marquee-slow font-gaming text-xl text-orange-100 py-1"></div>
+                            </div>
+                        </div>
+
+                        <div class="liquid-subglass border-l-4 border-purple-500 pt-7 pb-3 px-4 rounded-xl relative group">
+                            <span class="text-xs text-purple-300 uppercase font-bold tracking-widest absolute -top-3 left-3 bg-[#1a0826] px-3 py-1 border border-purple-500/60 rounded-full shadow-md z-10">
+                                🧹 <i class="fa-solid fa-crosshairs mr-1 text-purple-400"></i> Sở trường
+                            </span>
+                            <span class="absolute top-2 right-3 text-lg opacity-80 animate-broom">🧹</span>
+                            <div class="marquee-container overflow-hidden whitespace-nowrap w-full">
+                                <div id="modal-guns" class="inline-block animate-marquee-normal font-bold text-lg text-white py-1"></div>
+                            </div>
+                        </div>
+
+                        <div class="liquid-subglass border-l-4 border-emerald-500 pt-8 pb-4 px-5 rounded-xl relative">
+                            <span class="text-xs text-emerald-300 uppercase font-bold tracking-widest absolute -top-3 left-3 bg-[#1a0826] px-3 py-1 border border-emerald-500/60 rounded-full shadow-md z-10">
+                                🧪 <i class="fa-solid fa-id-card mr-1 text-emerald-400"></i> Tiểu sử
+                            </span>
+                            <span class="absolute top-2 right-3 text-lg opacity-80 animate-pumpkin">🎃</span>
+                            <p id="modal-desc" class="text-gray-100 italic leading-relaxed text-base"></p>
+                        </div>
+
+                        <div class="flex flex-col gap-3 mt-4">
+                            <a id="modal-drive" href="#" target="_blank" class="liquid-subglass block w-full py-4 text-center border border-emerald-400/60 text-emerald-300 hover:bg-emerald-600/35 hover:text-white font-gaming font-bold rounded-xl uppercase transition-all tracking-wider">
+                                <i class="fa-brands fa-google-drive mr-2"></i> Truy cập Kho Lưu Trữ
+                            </a>
+                            <a id="modal-img-link" href="#" target="_blank" class="liquid-subglass block w-full py-4 text-center border border-orange-400/60 text-orange-300 hover:bg-orange-600/35 hover:text-white font-gaming font-bold rounded-xl uppercase transition-all tracking-wider">
+                                <i class="fa-solid fa-comments mr-2"></i> Mạng Xã Hội
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="lightbox-modal" class="modal fixed inset-0 z-[80] flex items-center justify-center bg-black/85 p-4" onclick="closeLightbox()">
+        <button class="absolute top-4 right-4 text-white text-5xl hover:text-orange-500 transition z-50">&times;</button>
+        <img id="lightbox-img" src="" class="max-w-full max-h-full object-contain rounded-xl shadow-2xl animate-float">
+    </div>
+
+    <div id="culture-modal" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/55">
+        <div class="modal-content max-w-lg glass-panel p-8 rounded-2xl text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-orange-500 via-purple-500 to-emerald-400"></div>
+            <div class="flex justify-center items-center gap-3 text-4xl mb-3">
+                <span class="bat-wing-anim">🦇</span>
+                <span class="animate-pumpkin text-5xl">🎃</span>
+                <span class="animate-broom">🧹</span>
+            </div>
+            <h3 class="text-3xl font-gaming font-bold text-orange-300 mb-6">VĂN HOÁ CLAN</h3>
+            <div class="text-gray-100 text-justify text-lg leading-relaxed font-light mb-8 space-y-4">
+                <p>Nhóm thoải mái không ràng buộc, có thể nói chuyện hơi bậy, chửi cho đã cái mõm nhưng bít điểm để chửi không phải lôi za phả 18 đời cụ kị ra chửi, mọi hành zi quá khích sẽ bị go out. ĐẶC BIỆT không chứa thể loại 3 we.</p>
+            </div>
+            <button onclick="toggleCultureModal()" class="liquid-subglass px-8 py-3 bg-orange-600/30 hover:bg-orange-500/50 rounded-xl text-white font-bold transition w-full border border-orange-400/60">
+                ĐÃ RÕ
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
